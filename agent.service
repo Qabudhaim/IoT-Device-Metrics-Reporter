@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Agent
+After=network.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/qusai/Desktop/Iotistic/Agent
+ExecStart=/usr/bin/python3 /home/qusai/Desktop/Iotistic/Agent/main.py
+
+[Install]
+WantedBy=multi-user.target
