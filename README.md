@@ -118,6 +118,11 @@ The IoT Device Metrics Reporter is a distributed monitoring solution designed fo
 - **System Health:** Load averages and uptime
 - **Device Information:** Unique identifiers and timestamps
 
+### Logging
+- **Application Logs:** View detailed logs in the hidden `.log` directory
+- **Server Logs:** Located at `Server/.log/metrics.log`
+- **Agent Logs:** Located at `Agent/.log/metrics.log` 
+
 ## 📝 Development Notes
 
 ### Known Limitations
