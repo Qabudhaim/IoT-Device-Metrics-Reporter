@@ -1,0 +1,66 @@
+<!-- <div class="flex justify-center mb-5">
+    <nav aria-label="Page navigation example">
+    <ul class="flex list-style-none">
+        
+        <li class="page-item disabled m-1"><a
+            class="page-link font-bold relative block py-1.5 px-1.5 rounded border-0 bg-transparent outline-none transition-all duration-200 rounded {% if Devices.has_previous %}text-gray-800{% else %}text-gray-500 pointer-events-none{% endif %} hover:text-gray-800 hover:bg-gray-200   focus:shadow-none"
+            href="{% if Devices.has_previous %}{%url 'Devices:index'%}?page=1{% else %}{% endif %}" tabindex="-1" aria-disabled="true">First</a>
+        </li>
+        
+            <li class="page-item m-1"><a
+            class="page-link relative block py-1.5 px-1.5 rounded border-0 bg-transparent outline-none transition-all duration-200 rounded {% if Devices.has_previous %}text-gray-800{% else %}text-gray-500 pointer-events-none{% endif %} hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+            href="{% if Devices.has_previous %}{%url 'Devices:index'%}?page={{ Devices.previous_page_number }} {% else %}{% endif %}"><i class="bi bi-chevron-double-left"></i></a>
+        </li>
+        
+        <li class="page-item  m-1"><a
+            class="page-link relative block py-1.5 px-3 font-bold border-0 bg-white outline-none transition-all duration-200 rounded-md shadow hover:text-sky-500 shadow-md focus:shadow-md"
+            >Page {{ Devices.number }} of {{ Devices.paginator.num_pages }} <span class="visually-hidden"></span></a>
+        </li>
+        
+            <li class="page-item m-1"><a
+            class="page-link relative block py-1.5 px-1.5 rounded border-0 bg-transparent outline-none transition-all duration-200 rounded {% if Devices.has_next %}text-gray-800{% else %}text-gray-500 pointer-events-none{% endif %} hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+            href="{% if Devices.has_next %}{%url 'Devices:index'%}?page={{ Devices.next_page_number }}{% else %}{% endif %}"><i class="bi bi-chevron-double-right"></i></a>
+        </li>
+        
+        <li class="page-item m-1"><a
+            class="page-link font-bold relative block py-1.5 px-1.5 rounded border-0 bg-transparent outline-none transition-all duration-200 rounded {% if Devices.has_next %}text-gray-800{% else %}text-gray-500 pointer-events-none{% endif %} hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+            href="{% if Devices.has_next %}{%url 'Devices:index'%}?page={{ Devices.paginator.num_pages }}{% else %}{% endif %}">Last</a>
+        </li>
+
+    </ul>
+    </nav>
+</div> -->
+
+
+<div class="flex justify-center mb-5">
+    <nav aria-label="Page navigation ">
+        <ul class="flex list-style-none bg-white shadow rounded-md px-2 py-1">
+            
+            <li class="page-item disabled m-1"><a
+                class="page-link font-bold relative block py-1.5 px-1.5 rounded border-0 bg-transparent outline-none transition-all duration-200 rounded {% if Devices.has_previous %}text-gray-800{% else %}text-gray-500 pointer-events-none{% endif %} hover:text-sky-500 hover:shadow   focus:shadow-none"
+                href="{% if Devices.has_previous %}{{request.path}}?page=1{% else %}{% endif %}" tabindex="-1" aria-disabled="true">First</a>
+            </li>
+            
+                <li class="page-item m-1"><a
+                class="page-link relative block py-1.5 px-1.5 rounded border-0 bg-transparent outline-none transition-all duration-200 rounded {% if Devices.has_previous %}text-gray-800{% else %}text-gray-500 pointer-events-none{% endif %} hover:text-sky-500 hover:shadow focus:shadow-none"
+                href="{% if Devices.has_previous %}{{request.path}}?page={{ Devices.previous_page_number }} {% else %}{% endif %}"><i class="bi bi-chevron-double-left"></i></a>
+            </li>
+            
+            <li class="page-item  m-1"><a
+                class="page-link relative block py-1.5 px-3 font-bold outline-none transition-all duration-200 rounded-md hover:text-sky-500 focus:shadow-md"
+                >Page {{ Devices.number }} of {{ Devices.paginator.num_pages }} <span class="visually-hidden"></span></a>
+            </li>
+            
+                <li class="page-item m-1"><a
+                class="page-link relative block py-1.5 px-1.5 rounded border-0 bg-transparent outline-none transition-all duration-200 rounded {% if Devices.has_next %}text-gray-800{% else %}text-gray-500 pointer-events-none{% endif %} hover:text-sky-500 hover:shadow focus:shadow-none"
+                href="{% if Devices.has_next %}{{request.path}}?page={{ Devices.next_page_number }}{% else %}{% endif %}"><i class="bi bi-chevron-double-right"></i></a>
+            </li>
+            
+            <li class="page-item m-1"><a
+                class="page-link font-bold relative block py-1.5 px-1.5 rounded border-0 bg-transparent outline-none transition-all duration-200 rounded {% if Devices.has_next %}text-gray-800{% else %}text-gray-500 pointer-events-none{% endif %} hover:text-sky-500 hover:shadow focus:shadow-none"
+                href="{% if Devices.has_next %}{{request.path}}?page={{ Devices.paginator.num_pages }}{% else %}{% endif %}">Last</a>
+            </li>
+
+        </ul>
+    </nav>
+</div>

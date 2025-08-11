@@ -1,11 +1,11 @@
 [Unit]
-Description=Run Agent
-After=network.target
+Description=Run Agent main.py every 10s
 
-[Service]
-Type=oneshot
-WorkingDirectory=/home/qusai/Desktop/Iotistic/Agent
-ExecStart=/usr/bin/python3 /home/qusai/Desktop/Iotistic/Agent/main.py
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=10s
+AccuracySec=1s
+Persistent=False
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=timers.target

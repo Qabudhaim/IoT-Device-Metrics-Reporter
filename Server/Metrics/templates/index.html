@@ -1,13 +1,118 @@
-<!-- This is an HTML comment for clarity -->
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8"> <!-- Standard character encoding -->
-    <title>Quick Index Example</title> <!-- Page title-->
-    <style media="screen"> /* CSS goes here */ </style>
-  </head>
-  <body>
+{% extends 'base.html' %} 
 
-    TEST
-  </body>
-</html>
+{% block leftbar %}
+ {% include 'search_bar.html' %}
+ {% endblock %} 
+
+{% block content %} 
+
+<div id="device-container" class="grid grid-cols-4 gap-4 rounded-md"></div>
+
+{% load static %}
+
+<script>
+  const backgroundImageUrl = "{% static 'img/background.jpg' %}";
+  const container = document.getElementById('device-container');
+  const queryInput = document.getElementById('query');
+
+  let devices = []; // store devices globally
+
+  function isOnline(updatedAtISO) {
+    const updatedAt = new Date(updatedAtISO);
+    const now = new Date();
+    const diffMs = now - updatedAt; // diff in milliseconds
+    return diffMs <= 60 * 1000; // 1 minute = 60000 ms
+  }
+
+  function renderDevices(devicesToRender) {
+    container.innerHTML = ''; // Clear old cards
+
+    if (devicesToRender.length === 0) {
+      container.innerHTML = '<p class="col-span-4 text-center text-gray-500">No devices found.</p>';
+      return;
+    }
+
+    devicesToRender.forEach(device => {
+      const sysMetric = device.system_metrics && device.system_metrics.length > 0 ? device.system_metrics[0] : null;
+      const cpuUsage = sysMetric ? sysMetric.cpu_usage : 'N/A';
+      const updatedAt = sysMetric ? sysMetric.updated_at : null;
+
+      let uptime = 'N/A';
+      if (sysMetric && typeof sysMetric.uptime === 'number') {
+        uptime = sysMetric.uptime.toFixed(2);
+      }
+
+      const networkMetric = device.network_metrics && device.network_metrics.length > 0 ? device.network_metrics[0] : null;
+      const macAddress = networkMetric ? networkMetric.mac_address : 'N/A';
+      const ipAddress = networkMetric ? networkMetric.ip_address : 'N/A';
+
+      const online = updatedAt ? isOnline(updatedAt) : false;
+      const statusClass = online ? 'text-green-600 font-bold' : 'text-red-600 font-bold';
+      const statusText = online ? 'Online' : 'Offline';
+
+      const card = document.createElement('div');
+      card.className = 'flex flex-col transition duration-200 ease rounded-md w-full bg-white bg-clip-border shadow hover:shadow-lg hover:shadow-slate-300 p-4';
+
+      card.innerHTML = `
+        <a href="/show_device/${device.device_id}/" class="block group hover:no-underline">
+          <img class="w-full h-48 object-cover rounded-md group-hover:brightness-90 transition" src="${backgroundImageUrl}" alt="Device Cover" />
+          <div class="px-2 py-4">
+            <code class="font-bold mb-2 truncate block">${device.device_id.slice(-8)}</code>
+            <p class="text-gray-700 text-base">CPU Usage: ${cpuUsage}%</p>
+            <p class="text-gray-700 text-base">Uptime: ${uptime} s</p>
+            <p class="text-gray-700 text-base">MAC: ${macAddress}</p>
+            <p class="text-gray-700 text-base">IP: ${ipAddress}</p>
+            <p class="${statusClass}">${statusText}</p>
+          </div>
+        </a>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  async function fetchDevices() {
+    try {
+      const res = await fetch('http://127.0.0.1:8000/api/devices/');
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+      const json = await res.json();
+      devices = json.data || [];
+      filterAndRenderDevices(); // render with current filter
+    } catch (err) {
+      console.error('Failed to fetch devices:', err);
+      container.innerHTML = '<p class="col-span-4 text-center text-red-500">Failed to load devices.</p>';
+    }
+  }
+
+  function filterAndRenderDevices() {
+    const filterText = queryInput.value.trim().toLowerCase();
+
+    if (filterText === '') {
+      renderDevices(devices);
+    } else {
+      const filtered = devices.filter(device =>
+        device.device_id.toLowerCase().includes(filterText)
+      );
+      renderDevices(filtered);
+    }
+  }
+
+  // Set event listener on input to filter as user types
+  queryInput.addEventListener('input', filterAndRenderDevices);
+
+  // Initial fetch and render
+  fetchDevices();
+
+  // Refresh devices every 10 seconds and update view with filter applied
+  setInterval(fetchDevices, 2500);
+</script>
+
+{% endblock %} 
+
+{% block rightbar %}
+
+{% endblock %} 
+
+{% block footer %} 
+{% if Devices.has_other_pages %} {% include 'pagination.html' %} {% endif %} 
+{% endblock %}

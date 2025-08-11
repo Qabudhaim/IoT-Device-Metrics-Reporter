@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- <link rel="stylesheet" href="{% static 'icons/css/bootstrap-icons.css' %}"> -->
+    <title>Obscurus</title>
+
+</head>
+
+<body class="bg-slate-100 flex flex-col min-h-screen font-sans">
+
+    <!-- Header -->
+    <header class="p-1 m-1">
+        {% include 'navbar.html' %}
+    </header>
+
+    
+    <main class="grid grid-cols-12 flex-auto gap-1">
+        <!-- Left bar -->
+        <div class="p-1 m-1 col-span-2">
+            {% block leftbar %}
+            {% endblock %}
+        </div>
+
+        <!-- Content -->
+        <div class="p-1 m-1 col-span-8">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <!-- Right bar -->
+        <div class="p-1 m-1 col-span-2">
+            {% block rightbar %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="p-1 m-1 bottom-0 ">
+        {% block footer %}
+        {% endblock %}
+
+            <!-- Copyright section -->
+        <div class=" p-1 m-1 flex justify-center items-center">
+            {% include 'copyright.html' %}
+        </div>
+    </footer>
+
+
+    <!-- <script src="{% static 'js/index.js' %}"></script> -->
+
+</body>
+</html>
