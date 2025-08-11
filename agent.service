@@ -4,8 +4,9 @@ After=network.target
 
 [Service]
 Type=oneshot
-WorkingDirectory=/home/qusai/Desktop/Iotistic/Agent
-ExecStart=/usr/bin/python3 /home/qusai/Desktop/Iotistic/Agent/main.py
+# These will be replaced by deploy.sh during installation
+WorkingDirectory=__WORKING_DIR__
+ExecStart=/usr/bin/python3 __WORKING_DIR__/main.py
 
 [Install]
 WantedBy=multi-user.target

@@ -2,6 +2,13 @@
 
 set -e  # Exit immediately if a command exits with a non-zero status
 
+# Detect current directory (absolute path)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Update agent.service with the correct path
+sed -i "s|^WorkingDirectory=.*|WorkingDirectory=$SCRIPT_DIR|" agent.service
+sed -i "s|^ExecStart=.*|ExecStart=/usr/bin/python3 $SCRIPT_DIR/main.py|" agent.service
+
 # Run docker compose (detached)
 docker-compose up -d
 
