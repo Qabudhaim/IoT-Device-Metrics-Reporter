@@ -3,7 +3,7 @@
 set -e  # Exit immediately if a command exits with a non-zero status
 
 # Detect current directory (absolute path)
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)/Agent"
 
 # Update agent.service with the correct path
 sed -i "s|^WorkingDirectory=.*|WorkingDirectory=$SCRIPT_DIR|" agent.service
